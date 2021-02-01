@@ -37,5 +37,6 @@ Route::prefix('admin')
         //Home Admin
         Route::get('/', 'HomeController@index')->name('home');
         //Rotte Post CRUD
+        Route::resource('posts' , 'PostController');
     });
 
