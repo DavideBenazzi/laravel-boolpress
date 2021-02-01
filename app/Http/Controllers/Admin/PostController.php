@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -48,6 +49,18 @@ class PostController extends Controller
             'title' => 'required',
             'body' =>'required'
         ]);
+        //Get active user
+        $data['user_id'] = Auth::id();
+        //Slug
+        $data['slug'] = Str::slug($data['title'] , '-');
+
+        $newPost = new Post;
+        $newPost->fill($data);//Need fillable in model!
+        $saved = $newPost->save();
+
+        if($saved) {
+            return redirect()->route('admin.posts.index');
+        }
     }
 
     /**
