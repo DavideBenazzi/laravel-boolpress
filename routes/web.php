@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', 'HomeController@index')->name('home');
 
 /**
+ * ROTTE PUBLIC
+ */
+Route::get('posts' , 'PostController@index')->name('posts.index');
+Route::get('posts/{slug}' , 'PostController@show')->name('posts.show');
+
+/**
  * ROTTE LOGIN / REGISTRAZIONE
  */
 
@@ -39,4 +45,5 @@ Route::prefix('admin')
         //Rotte Post CRUD
         Route::resource('posts' , 'PostController');
     });
+
 

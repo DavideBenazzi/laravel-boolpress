@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>CREATE A NEW POST</h1>
+        <h1>EDIT POST</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -14,19 +14,19 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.update' , $post->id) }}" method="POST">
             @csrf
-            @method('POST')
+            @method('PATCH')
 
             <div class="form-group">
                 <label for="title">Post Title</label>
-                <input class="form-control" type="text" name="title" id="title" value="{{ old('title') }}">
+                <input class="form-control" type="text" name="title" id="title" value="{{ old('title' , $post->title) }}">
             </div>
             <div class="form-group">
                 <label for="body">Post Content</label>
-                <textarea class="form-control" name="body" id="body" cols="30" rows="10">{{ old('body') }}</textarea>
+                <textarea class="form-control" name="body" id="body" cols="30" rows="10">{{ old('title' , $post->body) }}</textarea>
             </div>
-            <input class="btn btn-primary" type="submit" value="Create Post">
+            <input class="btn btn-primary" type="submit" value="Update Post">
         </form>
     </div>
 @endsection
