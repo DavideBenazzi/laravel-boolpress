@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('post-deleted'))
+        <div class="alert alert-success">
+            Product '{{ session('post-deleted') }}' has been deleted successfully.
+        </div>
+    @endif
     <div class="container">
         <h1>YOUR POSTS</h1>
         @if ($posts->isEmpty())
@@ -24,13 +29,17 @@
                             <td>{{ $post->created_at->format('d/m/Y') }}</td>
 
                             <td>
-                                <a href="" class="btn btn-success">Show</a>
+                                <a href="{{ route('admin.posts.show' , $post->slug) }}" class="btn btn-success">Show</a>
                             </td>
                             <td>
                                 <a href="{{ route('admin.posts.edit' , $post->id) }}" class="btn btn-primary">Edit</a>
                             </td>
                             <td>
-                                 <a href="" class="btn btn-danger">Delete</a> {{-- deve essere una form! --}}
+                                 <form action="{{ route('admin.posts.destroy' , $post->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input class="btn btn-danger" type="submit" value="Delete Post">
+                                </form>
                             </td>
                         </tr>                        
                     @endforeach
